@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS "logs" (
+    id BIGSERIAL PRIMARY KEY,
+    timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    message TEXT NOT NULL,
+    level int NOT NULL,
+    context JSONB NOT NULL DEFAULT '{}'
+);

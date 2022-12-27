@@ -1,0 +1,24 @@
+[package]
+name = "log-ingest-api"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.6.1"
+chrono = "0.4.23"
+envconfig = "0.10.0"
+log = "0.4.17"
+sea-orm = { version = "0.10.6", features = ["macros", "sqlx-postgres", "runtime-tokio-rustls", "with-json", "mock"] }
+serde = "1.0.151"
+serde_json = { version = "1.0.91" }
+sqlx = { version = "0.6.2", features = ["migrate"] }
+
+tokio = { version = "1.23.0", features = ["rt", "rt-multi-thread", "macros"]}
+tracing = "0.1.37"
+tracing-subscriber = { version = "0.3.16",  features = ["json", "env-filter"] }
+
+[dev-dependencies]
+hyper = "0.14.23"
+tower = "0.4.13"
