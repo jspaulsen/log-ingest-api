@@ -1,3 +1,4 @@
+name: Publish
 on:
   # push:
   #   branches: [ "develop", "main" ]
@@ -9,6 +10,10 @@ on:
 
 jobs:
   publish:
+    permissions:
+      contents: read
+      packages: write
+      
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
     steps:
