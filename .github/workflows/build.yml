@@ -1,0 +1,24 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: isbang/compose-action@v1.4.1
+      with:
+        compose-file: "docker-compose.test.yaml"
+    - name: Build
+      run: cargo build --verbose
+    - name: Test
+      run: DATABASE_URL="postgres://postgres:postgres@postgres:5432/logs" cargo test -- --include-ignored --test-threads=1
