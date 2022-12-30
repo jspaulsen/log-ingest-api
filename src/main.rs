@@ -10,7 +10,7 @@ mod models;
 mod parameters;
 
 
-const VERSION: &str = include_str!("../VERSION");
+const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 
 #[tokio::main]

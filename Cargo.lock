@@ -861,7 +861,7 @@ dependencies = [
 
 [[package]]
 name = "log-ingest-api"
-version = "0.1.0"
+version = "0.1.1-dev.0"
 dependencies = [
  "axum",
  "chrono",
