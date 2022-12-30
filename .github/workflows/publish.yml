@@ -19,7 +19,8 @@ jobs:
       packages: write
 
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
+    # if the branch is develop or main OR the workflow was triggered manually
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
