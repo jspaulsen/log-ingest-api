@@ -29,4 +29,4 @@ jobs:
     - name: Build
       run: cargo build --release --locked
     - name: Test
-      run: DATABASE_URL="postgres://postgres:postgres@postgres:5432/logs" cargo test -- --include-ignored --test-threads=1 --release --locked
+      run: DATABASE_URL="postgres://postgres:postgres@postgres:5432/logs" cargo test -- --include-ignored --test-threads=1
