@@ -166,7 +166,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_query_logs() {
-        let db: &DatabaseConnection = &MockDatabase::new(DatabaseBackend::MySql)
+        let db: DatabaseConnection = MockDatabase::new(DatabaseBackend::MySql)
             .append_query_results(vec![
                 vec![LogModel {
                     id: 1,
@@ -179,8 +179,7 @@ mod tests {
             .into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone()
-                .into(),
+            db,
             config(),
         ).into();
 
@@ -228,12 +227,11 @@ mod tests {
 
     #[tokio::test]
     async fn test_query_logs_fail() {
-        let db: &DatabaseConnection = &MockDatabase::new(DatabaseBackend::MySql)
+        let db: DatabaseConnection = MockDatabase::new(DatabaseBackend::MySql)
             .into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone()
-                .into(),
+            db.clone(),
             config(),
         ).into();
 
@@ -293,8 +291,7 @@ mod tests {
             .unwrap();
 
         let router: axum::Router = Api::new(
-            db.clone()
-                .into(),
+            db,
             config,
         ).into();
 
@@ -332,7 +329,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_ingest_mocked() {
-        let db: &DatabaseConnection = &MockDatabase::new(DatabaseBackend::MySql)
+        let db: DatabaseConnection = MockDatabase::new(DatabaseBackend::MySql)
             .append_exec_results(vec![
                 MockExecResult {
                     last_insert_id: 15,
@@ -342,8 +339,7 @@ mod tests {
         ).into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone()
-                .into(),
+            db,
             config(),
         ).into();
 
@@ -392,12 +388,11 @@ mod tests {
 
     #[tokio::test]
     async fn test_ingest_fail() {
-        let db: &DatabaseConnection = &MockDatabase::new(DatabaseBackend::MySql)
+        let db: DatabaseConnection = MockDatabase::new(DatabaseBackend::MySql)
             .into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone()
-                .into(),
+            db,
             config(),
         ).into();
 
@@ -434,9 +429,8 @@ mod tests {
             .await;
 
         let router: axum::Router = Api::new(
-            db.clone()
-                .into(),
-            config,
+            db,
+            config.clone(),
         ).into();
 
         let body = serde_json::json!([
@@ -481,13 +475,16 @@ mod tests {
         
         assert_eq!(body.get("count").unwrap().as_u64().unwrap(), 2);
 
+        let db_conn = database::get_db_connection(&config)
+            .await
+            .unwrap();
+
         let query = crate::models::QueryBuilder::new()
-            .build(&db)
-            .all(&db)
+            .build(&db_conn)
+            .all(&db_conn)
             .await
             .unwrap();
         
         assert_eq!(query.len(), 2);
-
     }
 }
