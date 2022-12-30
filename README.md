@@ -2,6 +2,15 @@
 
 API for ingesting log messages
 
+## Configuration
+
+Configuration is done via environment variables.  The following variables are supported:
+
+`DATABASE_URL` (Required) - The database URL application connects to.  Must be in `postgres://` format.
+`HTTP_PORT` (Optional) - The port the HTTP server listens on.  Defaults to `8080`.
+`HTTP_HOST` (Optional) - The host the HTTP server listens on.  Defaults to `0.0.0.0`.
+`LOG_LEVEL` (Optional) - The log level for the application.  Defaults to `info`.
+
 ## Database Migrations
 
 `log-ingest-api` leverages `sqlx-cli` (and `sqlx` in code) for database migrations.

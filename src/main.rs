@@ -10,6 +10,9 @@ mod models;
 mod parameters;
 
 
+const VERSION: &str = include_str!("../VERSION");
+
+
 #[tokio::main]
 async fn main() {
     let config = Config::init_from_env()
@@ -25,6 +28,8 @@ async fn main() {
         .with_current_span(false)
         .init();
 
+    tracing::info!("log-ingest-api version: {}", VERSION);
+
     let db_connection = database::get_db_connection(&config)
         .await
         .expect("Failed to setup database connection!");
@@ -36,6 +41,8 @@ async fn main() {
 
     let bind_to = format!("{}:{}", config.http_host, config.http_port);
     let api = api::Api::new(db_connection, config);
+    
+    tracing::info!("Starting server on {}", bind_to);
 
     axum::Server::bind(
         &bind_to
