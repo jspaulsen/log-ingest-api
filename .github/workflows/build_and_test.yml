@@ -24,9 +24,7 @@ jobs:
     - uses: isbang/compose-action@v1.4.1
       with:
         compose-file: "docker-compose.test.yaml"
-    - name: Help
-      run: rustc --version
     - name: Build
-      run: cargo build --verbose
+      run: cargo build --release
     - name: Test
       run: DATABASE_URL="postgres://postgres:postgres@postgres:5432/logs" cargo test -- --include-ignored --test-threads=1
