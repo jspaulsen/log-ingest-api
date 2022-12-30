@@ -8,12 +8,16 @@ on:
       - completed
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   publish:
     permissions:
       contents: read
       packages: write
-      
+
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
     steps:
