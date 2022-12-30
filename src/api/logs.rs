@@ -179,7 +179,8 @@ mod tests {
             .into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone(),
+            db.clone()
+                .into(),
             config(),
         ).into();
 
@@ -231,7 +232,8 @@ mod tests {
             .into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone(),
+            db.clone()
+                .into(),
             config(),
         ).into();
 
@@ -291,7 +293,8 @@ mod tests {
             .unwrap();
 
         let router: axum::Router = Api::new(
-            db.clone(),
+            db.clone()
+                .into(),
             config,
         ).into();
 
@@ -339,7 +342,8 @@ mod tests {
         ).into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone(),
+            db.clone()
+                .into(),
             config(),
         ).into();
 
@@ -392,7 +396,8 @@ mod tests {
             .into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone(),
+            db.clone()
+                .into(),
             config(),
         ).into();
 
@@ -429,7 +434,8 @@ mod tests {
             .await;
 
         let router: axum::Router = Api::new(
-            db.clone(),
+            db.clone()
+                .into(),
             config,
         ).into();
 

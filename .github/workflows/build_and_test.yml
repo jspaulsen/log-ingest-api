@@ -1,0 +1,32 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "develop", "main" ]
+  pull_request:
+    branches: [ "develop", "main" ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+        components: rustfmt, clippy
+    - uses: isbang/compose-action@v1.4.1
+      with:
+        compose-file: "docker-compose.test.yaml"
+    - name: Version
+      run: cargo --version
+    - name: Build
+      run: cargo build --release --locked
+    - name: Test
+      run: DATABASE_URL="postgres://postgres:postgres@postgres:5432/logs" cargo test -- --include-ignored --test-threads=1 --release --locked
