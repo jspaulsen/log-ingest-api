@@ -231,7 +231,7 @@ mod tests {
             .into_connection();
 
         let router: axum::Router = Api::new(
-            db.clone(),
+            db,
             config(),
         ).into();
 
